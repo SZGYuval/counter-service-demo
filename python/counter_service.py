@@ -11,5 +11,7 @@ def index():
         return "Hmm, Plus 1 please "
     else:
         return str(f"Our counter is: {counter} ")
-
+    
+if __name__ == '__main__':
+    app.run(debug=True,port=80,host='0.0.0.0')
 
