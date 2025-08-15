@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Detect the current branch: GITHUB_HEAD_REF is set in PR events, otherwise use GITHUB_REF_NAME
+HEAD_BRANCH="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}"
+
 # Create the pull request via GitHub API
 curl -L \
   -X POST \
