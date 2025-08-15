@@ -2,7 +2,7 @@
 set -euo pipefail
 
 
-# Create the pull request via GitHub API
+# Create the pull requestt via GitHub API
 create_resp=$(curl -L \
   -X POST \
   -H "Accept: application/vnd.github+json" \
