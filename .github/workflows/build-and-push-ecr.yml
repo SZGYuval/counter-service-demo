@@ -39,3 +39,16 @@ jobs:
           # Write new version to file & expose to later steps
           echo "$NEXT" > version
           echo "next=$NEXT" >> "$GITHUB_OUTPUT"
+
+      - name: push new version file to git
+        run: |
+          set -euo pipefail
+          if ! git diff --quiet -- version; then
+            git config user.name "${{ secrets.USERNAME  }}"
+            git config user.email "${{ secrets.EMAIL }}"
+            git add version
+            git commit -m "updated version file"
+            git push origin HEAD:main
+          else
+            echo "Version file already up to data, skipping commit"
+          fi
