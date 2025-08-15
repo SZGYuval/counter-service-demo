@@ -1,6 +1,6 @@
 on:
   pull_request:
-    types: [closed]   # fires when PR is closed (merged or not)
+    types: [closed]  
 
 jobs:
   build:
