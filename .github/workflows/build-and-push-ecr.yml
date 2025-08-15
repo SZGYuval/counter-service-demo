@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.merge_commit_sha }}  # checkout the merge commit
 
-      - name: Decide bump from merge commit message
+      - name: Decide the tagging system if the images
         run: |
           CUR="$(cat version | tr -d '\r\n')"
           MAJOR=$(echo "$CUR" | cut -d. -f1)
@@ -66,5 +66,5 @@ jobs:
             ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
             GITHUB_HEAD_REF: ${{ github.head_ref }}
             GITHUB_REF_NAME: ${{ github.ref_name }}
-        run: ./pr_main_to_feature_branch.sh
+        run: ./pr_main_to_feature.sh
           
