@@ -6,8 +6,8 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY python ./python
+COPY python/counter_service.py ./counter_service.py
 
-EXPOSE 8000
+EXPOSE 80
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "python.wsgi:app", "--workers", "2"]
+CMD ["python", "counter_service.py"]
