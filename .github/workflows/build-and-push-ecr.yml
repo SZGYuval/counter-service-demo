@@ -1,0 +1,18 @@
+on:
+  pull_request:
+    types: [closed]   # fires when PR is closed (merged or not)
+
+jobs:
+  build:
+    if: ${{ github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'}}  # only merged PRs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.merge_commit_sha }}  # checkout the merge commit
+
+      - name: Decide bump from merge commit message
+        run: |
+          LOG="$(git log -1 --format=%B)"
+          echo "$LOG"
