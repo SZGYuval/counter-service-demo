@@ -11,7 +11,7 @@ create_resp=$(curl -L \
   https://api.github.com/repos/SZGYuval/counter-service-demo/pulls \
   -d "{\"title\":\"Automated PR from main\",\"body\":\"Auto-created PR from branch main via CI\",\"head\":\"main\",\"base\":\"feature-branch\"}")
 
-PR_NUMBER = $(echo "$create_resp" | jq -r '.number')
+PR_NUMBER=$(echo "$create_resp" | jq -r '.number')
 
 echo "Created PR #$PR_NUMBER"
 
