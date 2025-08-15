@@ -3,7 +3,7 @@ set -euo pipefail
 
 
 # Create the pull request via GitHub API
-respone = $(curl -L \
+create_resp=$(curl -L \
   -X POST \
   -H "Accept: application/vnd.github+json" \
   -H "Authorization: Bearer ${ACCESS_TOKEN}" \
