@@ -2,6 +2,14 @@ on:
   pull_request:
     types: [closed]  
 
+env:
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  AWS_ROLE_ARN: ${{ secrets.AWS_ROLE }}
+  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+  ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+  USERNAME: ${{ secrets.USERNAME }}
+  EMAIL: ${{ secrets.EMAIL }}
+
 jobs:
   build:
     if: ${{ github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'}}  # only merged PRs
@@ -56,6 +64,16 @@ jobs:
           else
             echo "Version file already up to data, skipping commit"
           fi
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-session-name: GITHUB-PUSH-IMAGE
+          
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
 
       - name: Make poll request from main to feature branch script executable
         run: chmod +x pr_main_to_feature.sh
