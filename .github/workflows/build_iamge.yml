@@ -2,7 +2,8 @@ name: build docker image
 
 on:
     push:
-        branches: ["**"]
+        branches-ignore: 
+            - main
 
 jobs:
     open-pr:
