@@ -10,6 +10,6 @@ def index():
         counter+=1
         return "Hmm, Plus 1 please "
     else:
-        return str(f"check: {counter} ")
+        return str(f"Our counter is: {counter} ")
 
 
