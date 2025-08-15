@@ -22,7 +22,7 @@ jobs:
           MAJOR=$(echo "$CUR" | cut -d. -f1)
           MINOR=$(echo "$CUR" | cut -d. -f2)
           PATCH=$(echo "$CUR" | cut -d. -f3)
-          LOG="$(git log -1 --format=%B)"
+          LOG="$(git log -1 --format=%B | tr -d '\r')"
 
           # Case-insensitive match for keywords
           shopt -s nocasematch
