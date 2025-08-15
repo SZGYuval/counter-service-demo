@@ -14,5 +14,28 @@ jobs:
 
       - name: Decide bump from merge commit message
         run: |
+          CUR="$(cat version | tr -d '\r\n')"
+          MAJOR=$(echo "$CUR" | cut -d. -f1)
+          MINOR=$(echo "$CUR" | cut -d. -f2)
+          PATCH=$(echo "$CUR" | cut -d. -f3)
           LOG="$(git log -1 --format=%B)"
-          echo "$LOG"
+
+          # Case-insensitive match for keywords
+          shopt -s nocasematch
+          if [[ "$LOG" == *major* ]]; then
+            ((MAJOR++)); MINOR=0; PATCH=0
+          elif [[ "$LOG" == *minor* ]]; then
+            ((MINOR++)); PATCH=0
+          else
+            ((PATCH++))
+          fi
+          shopt -u nocasematch
+
+          NEXT="${MAJOR}.${MINOR}.${PATCH}"
+
+          echo "Current: $CUR"
+          echo "Next:    $NEXT"
+
+          # Write new version to file & expose to later steps
+          echo "$NEXT" > version
+          echo "next=$NEXT" >> "$GITHUB_OUTPUT"
