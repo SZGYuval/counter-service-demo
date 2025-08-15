@@ -14,10 +14,10 @@ jobs:
         - name: Checkout repository
           uses: actions/checkout@v4
 
-        - name: Make pr.sh executable
+        - name: Make poll request script executable
           run: chmod +x ./pr.sh
 
-        - name: Run pr.sh (non main only)
+        - name: invokes pull request if the branch is not main
           if: github.ref != 'refs/heads/main'
           env:
             ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
