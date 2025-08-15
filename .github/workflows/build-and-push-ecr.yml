@@ -26,6 +26,7 @@ jobs:
           ref: ${{ github.event.pull_request.merge_commit_sha }}  # checkout the merge commit
 
       - name: Decide the tagging system if the images
+        id: image_versioning
         run: |
           CUR="$(cat version | tr -d '\r\n')"
           MAJOR=$(echo "$CUR" | cut -d. -f1)
@@ -75,6 +76,15 @@ jobs:
           
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push Docker image to ECR
+        run: |
+          VERSION="${{ steps.image_versioning.outputs.next }}"
+          IMAGE_URI="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY}:${VERSION}"
+          echo "Building image: $IMAGE_URI"
+          docker build -t "$IMAGE_URI" .
+          echo "Pushing image: $IMAGE_URI"
+          docker push "$IMAGE_URI"
 
       - name: Make poll request from main to feature branch script executable
         run: chmod +x pr_main_to_feature.sh
