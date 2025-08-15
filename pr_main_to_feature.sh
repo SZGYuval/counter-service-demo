@@ -15,13 +15,6 @@ PR_NUMBER=$(echo "$create_resp" | jq -r '.number')
 
 echo "Created PR #$PR_NUMBER"
 
-# 1) Approve the PR
-curl -sS -L -X POST \
-  -H "Accept: application/vnd.github+json" \
-  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
-  "https://api.github.com/repos/SZGYuval/counter-service-demo/pulls/${PR_NUMBER}/reviews" \
-  -d '{"event":"APPROVE","body":"LGTM (automated)"}'
-
 # 2) Merge the PR
 curl -sS -L -X PUT \
   -H "Accept: application/vnd.github+json" \
