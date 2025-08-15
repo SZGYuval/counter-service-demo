@@ -28,11 +28,11 @@ jobs:
           # Case-insensitive match for keywords
           shopt -s nocasematch
           if [[ "$LOG" == *major* ]]; then
-            ((MAJOR + 1)); MINOR=0; PATCH=0
+            MAJOR=$((MAJOR + 1)); MINOR=0; PATCH=0
           elif [[ "$LOG" == *minor* ]]; then
-            ((MINOR + 1)); PATCH=0
+            MINOR=$((MINOR + 1)); PATCH=0
           else
-            ((PATCH + 1))
+            PATCH=$((PATCH + 1))
           fi
           shopt -u nocasematch
 
