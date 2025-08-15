@@ -57,7 +57,7 @@ jobs:
             echo "Version file already up to data, skipping commit"
           fi
 
-      - name: Make poll request script executable
+      - name: Make poll request from main to feature branch script executable
         run: chmod +x pr_main_to_feature.sh
         
       - name: invokes pull request if the branch is main
